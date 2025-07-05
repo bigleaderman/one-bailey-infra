@@ -4,7 +4,7 @@ global:
     format: json         # 로그 포맷 설정 (json 형식)
 
 controller:
-  replicas: 1
+  replicas: 2
   nodeSelector:
     node-role.kubernetes.io/storage-node: "true"  # 스토리지 노드에 배치
   resources:
