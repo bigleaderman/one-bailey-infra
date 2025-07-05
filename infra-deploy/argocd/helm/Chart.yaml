@@ -1,0 +1,7 @@
+apiVersion: v2
+name: onebailey-argocd
+description: A Helm chart to deploy ArgoCD with custom values
+type: application
+version: 0.1.0
+appVersion: "2.11.0"  # 실제 사용 중인 ArgoCD 버전에 맞게 조정
+
