@@ -1,0 +1,24 @@
+# 파드 스케줄링 (네 클러스터 정책에 맞춤)
+nodeSelector:
+  kubernetes.io/hostname: worker-03
+tolerations:
+  - key: "node-role.kubernetes.io/worker"
+    operator: "Exists"
+
+replicaCount: 1
+
+image:
+  repository: mongo-express
+  # tag는 차트 기본값 사용(최신 안정판)
+
+service:
+  type: ClusterIP
+  port: 27017
+
+# mongo-express 환경변수 (서브패스 + MongoDB 연결)
+extraEnv:
+  - name: ME_CONFIG_MONGODB_URL
+    value: "mongodb://mongodb.db.svc.cluster.local:27017"
+  - name: ME_CONFIG_SITE_BASEURL
+    value: "/mongodb/"
+

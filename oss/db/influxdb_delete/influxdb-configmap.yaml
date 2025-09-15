@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: influxdb-config
+  namespace: db
+data:
+  config.yaml: |
+    http:
+      bind-address: ":8086"
+      base-path: /influxdb
+

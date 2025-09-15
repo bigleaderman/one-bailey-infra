@@ -1,0 +1,8 @@
+# 1-b. StorageClass 정의 (provisioner 없음)
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+

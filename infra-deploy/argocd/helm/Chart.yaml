@@ -1,7 +1,0 @@
-apiVersion: v2
-name: argo-cd
-description: A Helm chart for ArgoCD
-type: application
-version: 5.46.8           # Argo Helm chart 버전
-appVersion: "2.11.0"      # ArgoCD 실제 앱 버전
-

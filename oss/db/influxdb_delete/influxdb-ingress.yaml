@@ -1,14 +1,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argocd-ingress
-  namespace: cicd
+  name: influxdb-ingress
+  namespace: db
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/use-regex: "true"
-      #nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   tls:
@@ -19,10 +19,10 @@ spec:
     - host: onebailey.shop
       http:
         paths:
-          - path: /argocd(/|$)(.*)
+          - path: /
             pathType: ImplementationSpecific
             backend:
               service:
-                name: argocd-server
+                name: influxdb-influxdb2
                 port:
-                  number: 80
+                  number: 8086

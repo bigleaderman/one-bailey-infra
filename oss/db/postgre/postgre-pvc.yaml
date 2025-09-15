@@ -1,0 +1,22 @@
+# postgres-pvc.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-postgres-w03
+spec:
+  capacity:
+    storage: 200Gi          # ← PVC의 요청 용량과 동일하게
+  volumeMode: Filesystem
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-postgres
+  local:
+    path: /mnt/data/postgre
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values: ["worker-03"]   # ← 실제 노드명과 정확히 일치
+

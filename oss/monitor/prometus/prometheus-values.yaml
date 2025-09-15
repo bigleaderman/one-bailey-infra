@@ -1,0 +1,53 @@
+alertmanager:
+  enabled: false
+
+pushgateway:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+  # nodeSelector 없음 → DaemonSet으로 모든 노드 배포됨
+
+grafana:
+  enabled: false
+
+prometheusOperator:
+  enabled: true
+
+prometheus:
+  prometheusSpec:
+    nodeSelector:
+      node-role.kubernetes.io/infra-node: "true"  # worker-02에 해당 label 있음
+    tolerations:
+      - key: "node-role.kubernetes.io/infra-node"
+        operator: "Exists"
+        effect: "NoSchedule"
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: standard
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 20Gi
+    serviceMonitorSelectorNilUsesHelmValues: false
+    retention: 10d
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 250m
+      limits:
+        memory: 2Gi
+        cpu: 1000m
+    routePrefix: /prometheus
+    externalUrl: https://onebailey.shop/prometheus
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false  # ingress.yaml로 외부 관리 중
+

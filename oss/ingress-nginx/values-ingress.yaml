@@ -1,0 +1,22 @@
+controller:
+  replicaCount: 2
+  nodeSelector:
+    node-role.kubernetes.io/ingress-node: "true" 
+  tolerations:
+    - key: "node-role.kubernetes.io/ingress-node"
+      operator: "Exists"
+  service:
+    type: LoadBalancer 
+    nodePorts:
+      http: 30080
+      https: 30443
+  admissionWebhooks:
+    enabled: true
+  allowSnippetAnnotations: true
+  config:
+    http01-ingress-class: nginx
+    enable-ssl-passthrough: "true"
+      #enable-path-type-exact: "true"
+  extraArgs:
+    enable-annotation-validation: "false"
+

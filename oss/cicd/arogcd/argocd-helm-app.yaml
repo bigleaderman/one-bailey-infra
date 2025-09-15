@@ -1,0 +1,24 @@
+# argocd-helm-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-helm-git
+  namespace: cicd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:bigleaderman/one-bailey-infra.git
+    targetRevision: main
+    path: infra-deploy/argocd/helm
+    targetRevision: main
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cicd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

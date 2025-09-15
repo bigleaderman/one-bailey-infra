@@ -1,0 +1,45 @@
+nodeSelector:
+  node-role.kubernetes.io/infra-node: "true"
+
+tolerations:
+  - key: "node-role.kubernetes.io/infra-node"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+persistence:
+  enabled: true
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false  # 🔧 Ingress는 별도 YAML로 관리
+
+grafana.ini:
+  server:
+    root_url: "%(protocol)s://%(domain)s/grafana"
+    serve_from_sub_path: true
+
+env:
+  - name: GF_SERVER_ROOT_URL
+    value: https://onebailey.shop/grafana
+  - name: GF_SERVER_SERVE_FROM_SUB_PATH
+    value: "true"
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus-kube-prometheus-prometheus.infra.svc.cluster.local:80
+        isDefault: true
+        version: 1
+        editable: true
+

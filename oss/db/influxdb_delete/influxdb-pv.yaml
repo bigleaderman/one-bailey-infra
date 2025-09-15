@@ -1,0 +1,23 @@
+# 파일명: influxdb-fast-pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influxdb-fast-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: fast
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /mnt/data/influxdb  # worker-03의 실제 경로 (필요 시 수정)
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - worker-03
+

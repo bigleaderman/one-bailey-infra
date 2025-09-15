@@ -1,0 +1,17 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: onebailey-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 183.111.67.145/32  # 이 공인 IP를 쓸 수 있다면
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: onebailey-adv
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - onebailey-pool

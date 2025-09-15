@@ -1,12 +1,14 @@
+# prometheus-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: argocd-pvc
-  namespace: cicd
+  name: prometheus-pvc
+  namespace: infra
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi
   storageClassName: standard
+

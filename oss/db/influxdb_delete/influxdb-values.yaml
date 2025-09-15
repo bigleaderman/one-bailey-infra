@@ -1,0 +1,41 @@
+replicaCount: 1
+
+nodeSelector:
+  kubernetes.io/hostname: worker-03
+
+tolerations:
+  - key: "node-role.kubernetes.io/worker"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+persistence:
+  enabled: true
+  storageClass: fast
+  size: 10Gi
+  volumeName: influxdb-fast-pv
+
+adminUser:
+  bucket: trading_data
+  organization: one-bailey
+  user: admin
+  password: qlalfdla1234!
+  token: supersecrettoken
+
+service:
+  type: ClusterIP
+  port: 8086 
+
+env:
+  - name: INFLUXD_HTTP_BIND_ADDRESS
+    value: ":8086"
+  - name: INFLUXD_HTTP_BASE_PATH
+    value: "/influxdb"
+  - name: INFLUXD_UI_DISABLED
+    value: "false"
+  - name: INFLUXD_SERVER_SERVE_FROM_SUBPATH
+    value: "true"  # ✅ 반드시 필요
+
+config:
+  http:
+    # UI가 /influxdb 하위에서 서비스되도록 base-path 설정
+    base-path: /influxdb

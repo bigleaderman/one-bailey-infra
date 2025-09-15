@@ -4,7 +4,7 @@ global:
     format: json         # 로그 포맷 설정 (json 형식)
 
 controller:
-  replicas: 2
+  replicas: 1
   nodeSelector:
     node-role.kubernetes.io/storage-node: "true"  # 스토리지 노드에 배치
   resources:
@@ -87,3 +87,4 @@ dex:
 configs:
   params:
     server.insecure: true  # SSL 종료를 Ingress에서 처리하므로 ArgoCD는 HTTP로 운영
+
